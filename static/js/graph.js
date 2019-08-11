@@ -64,5 +64,26 @@ function show_average_salary(ndx) {
         return {count: 0, total: 0, average: 0};
     }
 
-    var averageSalaryByGender = dim.group().reduce(add_item, remove_item, initialise);
+        var averageSalaryByGender = dim.group().reduce(add_item, remove_item, initialise);
+
+    dc.barChart("#average-salary")
+        .width(400)
+        .height(300)
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
+        .dimension(dim)
+        .group(averageSalaryByGender)
+        .valueAccessor(function(d){
+            return d.value.average.toFixed(2);
+        })
+        .transitionDuration(500)
+        .x(d3.scale.ordinal())
+        .xUnits(dc.units.ordinal)
+        .elasticY(true)
+        .xAxisLabel("Gender")
+        .yAxis().ticks(4);   
 }
+
+
+
+
+
